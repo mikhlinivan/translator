@@ -8,4 +8,5 @@ typedef struct {
 
 String *word1(int size_of_word);
 String *write(char symb);
+int check(*String translated, *String translator);
 void free(String *arr)

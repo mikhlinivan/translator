@@ -19,6 +19,7 @@ String *write(char symb, int size, int symb_num)
 {
 	arr->array = realloc(size*sizeof(char));
 	arr->cap = size;
+	arr->size++;
 	arr->array[symb_num] = symb;
 }
 
@@ -30,3 +31,22 @@ void free_word(String *arr)
 	free(arr);
 }
 
+int check(*String translated, *String translator)
+{
+	int i, flg;
+	i = 0;
+	flg = 1;
+	if(translated->size == translator->size) {
+		while (transleted->array[i] != '\0') {
+			if(transleted->array[i] == translator->array[i]) {
+				flg = 0;
+				i++;
+			}
+			else {
+				flg = 1;
+				return flg;
+			}
+		}
+	}
+	return flg;
+}
