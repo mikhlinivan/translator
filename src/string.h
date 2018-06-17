@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include <stdio.h>
 
 typedef struct {
 	int size;
@@ -7,3 +7,4 @@ typedef struct {
 } String;
 
 String *word(int size_of_word);
+void free(String *arr)
