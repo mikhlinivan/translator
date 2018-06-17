@@ -6,5 +6,6 @@ typedef struct {
 	char *array;
 } String;
 
-String *word(int size_of_word);
+String *word1(int size_of_word);
+String *write(char symb);
 void free(String *arr)

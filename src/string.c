@@ -9,10 +9,17 @@ String *word1()
 		return NULL;
 	}
 	else {
-		arr->array = malloc(2*sizeof(char));
-		arr->cap = 2;
+		arr->array = malloc(1*sizeof(char));
+		arr->cap = 1;
 	}
 	return arr;
+}
+
+String *write(char symb, int size, int symb_num)
+{
+	arr->array = realloc(size*sizeof(char));
+	arr->cap = size;
+	arr->array[symb_num] = symb;
 }
 
 void free_word(String *arr)
