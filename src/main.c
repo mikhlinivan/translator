@@ -14,7 +14,9 @@ int main(int argv,char *arcg[])
 	char curr_symb, prev_symb, curr_translator_symb;
 	int i;
 	String *word_readed;
-	string *translator_readed;
+	String *translator_readed;
+	word_readed = word1();
+	translator_readed = word1();
 	in = fopen(arcg[1], "r");
 	if(in == NULL) {
 		printf("text dont exist\n");
@@ -27,6 +29,7 @@ int main(int argv,char *arcg[])
 	}
 	out = fopen(arcg[3], "w");
 	int word_lenght = 0;
+	curr_symb = getc(in);
 	while (curr_symb != EOF) {
 		
 	}
