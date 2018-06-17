@@ -78,6 +78,9 @@ int main(int argv,char *arcg[])
 		}
 		curr_symb = getc(in);
 	}
+	free_string(word_readed);
+	free_string(translator_readed);
+	free_string(translation);
 	fclose(in);
 	fclose(translator);
 	fclose(out);

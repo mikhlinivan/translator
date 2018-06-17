@@ -9,4 +9,5 @@ typedef struct {
 String *word1(int size_of_word);
 String *write(char symb);
 int check(*String translated, *String translator);
-void free(String *arr)
+void free_string(String *arr)
+String *get_eng (FILE translator, String *eng_word);
