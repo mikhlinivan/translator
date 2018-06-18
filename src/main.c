@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include "word.h"
-#include "translator.h"
+#include "string.h"
+#include "stdlib.h"
 #include <locale.h>
 
 int main(int argv,char *arcg[])
 {
 	setlocale(LC_ALL, "Rus");
 	//arcg[0] ./translator
-	//arcg[1] текст пользователя
-	//arcg[2] файл переводчика
-	//arcg[3] переведенный файл
+	//arcg[1] 
+	//arcg[2] 
+	//arcg[3] 
 	FILE *in, *translator, *out;
 	char curr_symb, prev_symb, curr_translator_symb;
-	int i, size, lenght_of_translator, size_of_translator, checker, count;
+	int i, size, lenght_of_translator, size_of_translator, checker, count, lenght_of_translated;
 	String *word_readed;
 	String *translator_readed;
 	String *translation;
@@ -30,53 +30,66 @@ int main(int argv,char *arcg[])
 		return 0;
 	}
 	out = fopen(arcg[3], "w");
-	int word_lenght = 0;
-	curr_symb = getc(in);
+	curr_symb = 'a';
 	size = 1;
 	i = 0;
 	lenght_of_translator = 1;
 	size_of_translator = 0;
 	while (curr_symb != EOF) {
 		prev_symb = curr_symb;
-		while (((curr_symb >= 'а') && (curr_symb <= 'я')) || ((curr_symb >= 'А') && (curr_symb <= 'Я'))) { //пишем первую строку(переводимое) запись начнется при попадании первой же буквы в функцию, если знак перпинания смотреть ниже
+		curr_symb = getc(in);
+		while (((curr_symb >= '�') && (curr_symb <= '�')) || ((curr_symb >= '�') && (curr_symb <= '�'))) { 
 			size++;
-			word_readed = write_symb(curr_symb, size, i);
+			write_symb(curr_symb, size, i, word_readed);
 			i++;
 			curr_symb = getc(in);
 		}
-		if(((prev_symb >= 'а') && (prev_symb <= 'я')) || ((prev_symb >= 'А') && (prev_symb <= 'Я'))) { //пишем вторую строку(слово из словарика) запись начнется при первом же русском символе в словарике, если знак препинания: игнорировать до русской буквы
-			lenght_of_translator++
+		if(((prev_symb >= '�') && (prev_symb <= '�')) || ((prev_symb >= '�') && (prev_symb <= '�'))) { 
+			lenght_of_translator++;
 			curr_translator_symb = getc(translator);
 			while(curr_translator_symb != EOF) {
-				while (((curr_translator_symb >= 'а') && (curr_translator_symb <= 'я')) || ((curr_translator_symb >= 'А') && (curr_translator_symb <= 'Я'))) {
-					translator_readed = write_symb(curr_translator_symb, lenght_of_translator, size_of_translator);
+				while (((curr_translator_symb >= '�') && (curr_translator_symb <= '�')) || ((curr_translator_symb >= '�') && (curr_translator_symb <= '�'))) {
+					write_symb(curr_translator_symb, lenght_of_translator, size_of_translator, translator_readed);
 					lenght_of_translator++;
 					size_of_translator++;
 					curr_translator_symb = getc(translator);
 				}
-				checker = check(word_readed, translator_readed); //сравнение
+				checker = check(word_readed, translator_readed);
 				if(checker == 0) { 
-					translation = get_eng(translator, translation);
+					fseek(translator , 2, SEEK_CUR);
+					curr_translator_symb = getc(translator);
+					count = 0;
+					lenght_of_translated = 1;
+					while(((curr_translator_symb >= 'a') && (curr_translator_symb <= 'z')) || ((curr_translator_symb >='A') && (curr_translator_symb <= 'Z'))) {
+						lenght_of_translated++;
+						write_symb(curr_translator_symb, lenght_of_translated, count, translation);
+						curr_translator_symb = getc(translator);
+						count++;
+					}
+					count = 0;
 					while (translation->array[count] != '\0') {
 						fprintf(out, "%c", translation->array[count]);
+						count++;
 					}
-					goto next;
+					fseek(translator, 0, SEEK_SET);
+					goto next_point1;
 				}
 				curr_translator_symb = getc(translator);
 			}
-			next:
 			if(checker == 1) {
 				count = 0;
-				while (word_readed-array[count] != '\0') {
-					fprintf(out, "%c", word_readed-array[count]);
+				while (word_readed->array[count] != '\0') {
+					fprintf(out, "%c", word_readed->array[count]);
 				}
 			}
-			fseek(translator , 0 , SEEK_SET);   
 		}
-		if (curr_symb != EOF) {
-			fprintf(out, "%c", curr_symb);
+		else if (prev_symb != EOF) {
+			fprintf(out, "%c", prev_symb);
 		}
-		curr_symb = getc(in);
+		next_point1:
+		after(word_readed);
+		after(translator_readed);
+		after(translation);
 	}
 	free_string(word_readed);
 	free_string(translator_readed);

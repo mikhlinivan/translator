@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include "string.h"
+#include <locale.h>
 
 String *word1()
 {
+	setlocale(LC_ALL, "Rus");
 	String *arr;
 	arr = malloc(sizeof(String));
 	if(arr == NULL) {
@@ -11,59 +13,58 @@ String *word1()
 	else {
 		arr->array = malloc(2*sizeof(char));
 		arr->cap = 2;
+		arr->size = 0;
 	}
 	return arr;
 }
 
-String *write_symb(char symb, int size, int symb_num)
+write_symb(char symb, int size, int symb_num, String *arr)
 {
-	arr->array = realloc(size*sizeof(char));
+	setlocale(LC_ALL, "Rus");
+	realloc(arr->array, size*sizeof(char));
 	arr->cap = size;
 	arr->size++;
 	arr->array[symb_num] = symb;
 	arr->array[symb_num + 1] = '\0';
+	return arr;
 }
 
-void free_word(String *arr)
+void free_string(String *arr)
 {
+	setlocale(LC_ALL, "Rus");
 	free(arr->array);
 	arr->size = 0;
 	arr->cap = 0;
 	free(arr);
 }
 
-int check(*String translated, *String translator)
+int check(String *translated, String *translator)
 {
+	setlocale(LC_ALL, "Rus");
 	int i, flg;
 	i = 0;
 	flg = 1;
-	if(translated->size == translator->size) {
-		while (transleted->array[i] != '\0') {
-			if(transleted->array[i] == translator->array[i]) {
-				flg = 0;
-				i++;
-			}
-			else {
-				flg = 1;
-				return flg;
-			}
+	while (translated->array[i] != '\0') {
+		if(translated->array[i] == translator->array[i]) {
+			flg = 0;
+			i++;
+		}
+		else {
+			flg = 1;
+			return flg;
 		}
 	}
 	return flg;
 }
 
-String *get_eng (FILE translator, String *eng_word)
+void after(String *arr)
 {
-	int i, lenght;
-	char curr_symb;
-	for(i = 0; i < 4; i++) {
-		curr_symb = getc(translator);
+	int i;
+	while (arr->array[i] != '\0') {
+		arr->array[i] = 0;
+		i++;
 	}
-	i = 0;
-	lenght = 1;
-	while (((curr_symb >= 'a') && (curr_symb <= 'z')) || ((curr_symb >='A') && (curr_symb <= 'b'))) {
-		eng_word = write_symb(curr_symb, lenght, i);
-		curr_symb = getc(translator);
-	}
-	return eng_word;
+	realloc(arr->array, 2*sizeof(char));
+	arr->cap = 2;
+	arr->size = 0;
 }

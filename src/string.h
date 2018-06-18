@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "stdlib.h"
+#include <locale.h>
 
 typedef struct {
 	int size;
@@ -6,8 +8,8 @@ typedef struct {
 	char *array;
 } String;
 
-String *word1(int size_of_word);
-String *write(char symb);
-int check(*String translated, *String translator);
-void free_string(String *arr)
-String *get_eng (FILE translator, String *eng_word);
+String *word1();
+String *write_symb(char symb, int size, int symb_num, String *arr);
+int check(String *translated, String *translator);
+void free_string(String *arr);
+void after(String *arr);
