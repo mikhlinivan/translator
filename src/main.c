@@ -98,4 +98,4 @@ int main(int argv,char *arcg[])
 	fclose(translator);
 	fclose(out);
 	return 0;
-	}
+}

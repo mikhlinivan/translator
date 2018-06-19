@@ -18,7 +18,7 @@ String *word1()
 	return arr;
 }
 
-write_symb(char symb, int size, int symb_num, String *arr)
+void write_symb(char symb, int size, int symb_num, String *arr)
 {
 	setlocale(LC_ALL, "Rus");
 	realloc(arr->array, size*sizeof(char));
@@ -26,7 +26,6 @@ write_symb(char symb, int size, int symb_num, String *arr)
 	arr->size++;
 	arr->array[symb_num] = symb;
 	arr->array[symb_num + 1] = '\0';
-	return arr;
 }
 
 void free_string(String *arr)

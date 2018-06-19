@@ -9,7 +9,7 @@ typedef struct {
 } String;
 
 String *word1();
-String *write_symb(char symb, int size, int symb_num, String *arr);
+void write_symb(char symb, int size, int symb_num, String *arr);
 int check(String *translated, String *translator);
 void free_string(String *arr);
 void after(String *arr);
